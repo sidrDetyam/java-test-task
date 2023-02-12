@@ -1,4 +1,4 @@
-package ru.nsu.gemuev.sorting;
+package ru.nsu.gemuev.sorting.ports;
 
 import lombok.NonNull;
 import ru.nsu.gemuev.exceptions.DataException;

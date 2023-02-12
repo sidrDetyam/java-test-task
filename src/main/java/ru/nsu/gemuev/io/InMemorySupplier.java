@@ -4,7 +4,7 @@ import com.google.common.collect.Queues;
 import lombok.NonNull;
 import ru.nsu.gemuev.exceptions.DataException;
 import ru.nsu.gemuev.exceptions.EndOfData;
-import ru.nsu.gemuev.sorting.DataSupplier;
+import ru.nsu.gemuev.sorting.ports.DataSupplier;
 
 import java.util.Collection;
 import java.util.Deque;

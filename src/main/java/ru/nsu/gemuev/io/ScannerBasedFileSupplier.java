@@ -3,7 +3,7 @@ package ru.nsu.gemuev.io;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import ru.nsu.gemuev.exceptions.DataException;
-import ru.nsu.gemuev.sorting.DataSupplier;
+import ru.nsu.gemuev.sorting.ports.DataSupplier;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -36,10 +36,7 @@ public class ScannerBasedFileSupplier<T> implements DataSupplier<T> {
         }
         catch (NoSuchElementException e){
             IOException ioexception = scanner.ioException();
-            if(ioexception == null){
-                throw e;
-            }
-            throw new DataException("Some io exception occurred", ioexception);
+            throw new DataException("Some io exception occurred", ioexception == null? e : ioexception);
         }
     }
 

@@ -6,6 +6,8 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import ru.nsu.gemuev.exceptions.DataException;
+import ru.nsu.gemuev.sorting.ports.DataConsumer;
+import ru.nsu.gemuev.sorting.ports.DataSupplier;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;

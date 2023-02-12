@@ -2,7 +2,7 @@ package ru.nsu.gemuev.io;
 
 import lombok.Getter;
 import lombok.NonNull;
-import ru.nsu.gemuev.sorting.DataConsumer;
+import ru.nsu.gemuev.sorting.ports.DataConsumer;
 
 import java.util.ArrayList;
 

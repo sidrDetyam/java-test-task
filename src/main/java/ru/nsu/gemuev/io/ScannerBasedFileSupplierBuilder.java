@@ -10,7 +10,7 @@ import java.util.function.Function;
 
 @RequiredArgsConstructor
 public class ScannerBasedFileSupplierBuilder<T> {
-    private Charset charset;
+    @NonNull private Charset charset = Charset.defaultCharset();
     @NonNull private final Function<Scanner, ? extends T> getCb;
     @NonNull private final Function<Scanner, ? extends Boolean> isEndOfDataCb;
 
@@ -20,10 +20,6 @@ public class ScannerBasedFileSupplierBuilder<T> {
     }
 
     public ScannerBasedFileSupplier<T> build(@NonNull String fileName) throws FileNotFoundException {
-        return new ScannerBasedFileSupplier<>(
-                fileName,
-                charset==null? Charset.defaultCharset() : charset,
-                getCb,
-                isEndOfDataCb);
+        return new ScannerBasedFileSupplier<>(fileName, charset, getCb, isEndOfDataCb);
     }
 }
