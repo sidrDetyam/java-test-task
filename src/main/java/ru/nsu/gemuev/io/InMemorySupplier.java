@@ -23,4 +23,9 @@ public class InMemorySupplier<T> implements DataSupplier<T> {
         }
         return data.poll();
     }
+
+    @Override
+    public boolean isEndOfData() {
+        return data.isEmpty();
+    }
 }
