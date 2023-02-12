@@ -46,11 +46,14 @@ public class DataSorter<T> {
     private void addSupplierNextValueToQueue(@NonNull PriorityQueue<SupplierValueEntry<T>> pq,
                                              @NonNull DataSupplier<? extends T> supplier) {
         try {
+            if(supplier.isEndOfData()){
+                supplier.close();
+                return;
+            }
             final T nextValue = supplier.get();
             pq.add(new SupplierValueEntry<>(supplier, nextValue));
         } catch (DataException e) {
             log.error("Supplier`s data exception: %s".formatted(e));
-        } finally {
             supplier.close();
         }
     }
