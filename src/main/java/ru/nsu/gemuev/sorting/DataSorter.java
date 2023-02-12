@@ -39,6 +39,7 @@ public class DataSorter<T> {
                 pq.forEach(e -> e.supplier().close());
                 consumer.close();
                 log.error("Consumer`s data exception: %s".formatted(consumer));
+                return;
             }
         }
 
