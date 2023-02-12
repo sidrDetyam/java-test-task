@@ -40,60 +40,59 @@ public class Application implements Callable<Integer> {
     private List<String> fileNames;
 
     @Override
-    public Integer call(){
-        if(!checkParams()){
-            return 1;
+    public Integer call() {
+        if (!checkParams()) {
+            return 0;
         }
 
-        if(isInt){
-            return sort(FileSupplierUtils.getBigIntFileSupplierBuilder(), BigInteger::compareTo);
+        if (isInt) {
+            sort(FileSupplierUtils.getBigIntFileSupplierBuilder(), BigInteger::compareTo);
         }
-        return sort(FileSupplierUtils.getStringFileSupplierBuilder(), String::compareTo);
+        else {
+            sort(FileSupplierUtils.getStringFileSupplierBuilder(), String::compareTo);
+        }
+        return 0;
     }
 
-    private <T> int sort(@NonNull ScannerBasedFileSupplierBuilder<T> suppliersBuilder,
-                         @NonNull Comparator<T> comparator){
+    private <T> void sort(@NonNull ScannerBasedFileSupplierBuilder<T> suppliersBuilder,
+                         @NonNull Comparator<T> comparator) {
         final ArrayList<ScannerBasedFileSupplier<T>> suppliers = new ArrayList<>();
 
         final String outputFileName = fileNames.remove(0);
         try {
             final FileConsumer<T> fileConsumer = new FileConsumer<>(outputFileName);
-            for(String fileName : fileNames){
-                try{
+            for (String fileName : fileNames) {
+                try {
                     suppliers.add(suppliersBuilder.build(fileName));
-                }
-                catch (FileNotFoundException e){
+                } catch (FileNotFoundException e) {
                     System.err.printf("Can`t find file: %s%n", fileName);
                     suppliers.forEach(ScannerBasedFileSupplier::close);
-                    return 1;
+                    return;
                 }
             }
 
-            if(isDescending){
+            if (isDescending) {
                 comparator = comparator.reversed();
             }
 
             DataSorter<T> dataSorter = new DataSorter<>(comparator, new DropStrategy<>());
             dataSorter.sort(suppliers, fileConsumer);
 
-            return 0;
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             System.err.println("Can`t create output file");
-            return 1;
         }
     }
 
-    private boolean checkParams(){
-        if(isString == isInt){
+    private boolean checkParams() {
+        if (isString == isInt) {
             System.err.println("Incorrect args types");
             return false;
         }
-        if(isAscending && isDescending){
+        if (isAscending && isDescending) {
             System.err.println("Incorrect sorting order arg");
             return false;
         }
-        if(fileNames.size() < 2){
+        if (fileNames.size() < 2) {
             System.err.println("Incorrect files list");
             return false;
         }
